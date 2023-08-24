@@ -41,9 +41,10 @@ app.post('/message/:id', express.json(), (req, res) => {
   clients[id].forEach((client) => {
     // broadcast to each subscriber
     // write in each response of get requests on route '/events'
-    setTimeout(() => {
-      client.write(`data:${JSON.stringify({ text })}\n\n`)
-    }, 3000)
+    client.write(`data:${JSON.stringify({ text })}\n\n`)
+    // setTimeout(() => {
+    //   client.write(`data:${JSON.stringify({ text })}\n\n`)
+    // }, 3000)
   })
 
   // IMPORTANT to allow CORS access since our backend service is on another port
