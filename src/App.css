@@ -1,0 +1,52 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.App-header {
+  background-color: #282c34;
+  padding: 20px;
+  color: white;
+}
+
+.chat-container {
+  margin: 0 auto;
+  width: 300px;
+}
+
+.message-list {
+  border: 1px solid #ccc;
+  padding: 10px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.message {
+  background-color: #f2f2f2;
+  color: rgb(37, 37, 37);
+  margin-bottom: 5px;
+  padding: 5px;
+  border-radius: 3px;
+}
+
+.input-container {
+  margin-top: 10px;
+  display: flex;
+}
+
+input {
+  flex: 1;
+  padding: 5px;
+}
+
+button {
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
