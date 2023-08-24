@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import './App.css'
 
-function App() {
+function App({ id = 123 }) {
   const [messages, setMessages] = useState([])
   const [inputText, setInputText] = useState('')
 
   useEffect(() => {
     // create an SSE and (on the backend) subscribing to the clients list
-    const eventSource = new EventSource(`http://localhost:8080/events`)
+    const eventSource = new EventSource(`http://localhost:8080/events/${id}`)
 
     eventSource.onmessage = (event) => {
       const newMsg = JSON.parse(event.data).text
@@ -18,12 +18,12 @@ function App() {
     return () => {
       eventSource.close()
     }
-  }, [])
+  }, [id])
 
   const sendMessage = async () => {
     if (inputText.trim() !== '') {
       try {
-        await fetch('http://localhost:8080/message', {
+        await fetch(`http://localhost:8080/message/${id}`, {
           method: 'POST',
           // important to set headers to accept json
           headers: {
@@ -41,8 +41,8 @@ function App() {
 
   return (
     <div className='App'>
-      <header className='App-header'>
-        <h1>Live Chat App</h1>
+      <div className='App-header'>
+        <h1>Live Chat App {id}</h1>
         <div className='chat-container'>
           <div className='message-list'>
             {messages.map((message, index) => (
@@ -61,7 +61,7 @@ function App() {
             <button onClick={sendMessage}>Send</button>
           </div>
         </div>
-      </header>
+      </div>
     </div>
   )
 }
