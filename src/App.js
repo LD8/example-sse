@@ -6,11 +6,13 @@ function App() {
   const [inputText, setInputText] = useState('')
 
   useEffect(() => {
-    const eventSource = new EventSource('http://localhost:8080/events')
+    // create an SSE and (on the backend) subscribing to the clients list
+    const eventSource = new EventSource(`http://localhost:8080/events`)
 
     eventSource.onmessage = (event) => {
-      console.log({ data: JSON.parse(event.data).text })
-      setMessages((prev) => prev.concat(JSON.parse(event.data).text))
+      const newMsg = JSON.parse(event.data).text
+      console.log({ newMsg })
+      setMessages((prev) => prev.concat(newMsg))
     }
 
     return () => {
@@ -23,9 +25,10 @@ function App() {
       try {
         await fetch('http://localhost:8080/message', {
           method: 'POST',
+          // important to set headers to accept json
           headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            // Accept: 'application/json',
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({ text: inputText }),
         })
